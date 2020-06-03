@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.commune.paris.mapper.PBlogMapper">
+  <resultMap id="BaseResultMap" type="com.commune.paris.entity.PBlog">
+    <id column="p_blog_id" jdbcType="INTEGER" property="id" />
+    <result column="p_blog_user_id" jdbcType="INTEGER" property="userId" />
+    <result column="p_blog_title" jdbcType="VARCHAR" property="title" />
+    <result column="p_blog_description" jdbcType="VARCHAR" property="description" />
+    <result column="p_blog_content" jdbcType="VARCHAR" property="content" />
+    <result column="p_blog_created" jdbcType="TIMESTAMP" property="created" />
+    <result column="p_blog_status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    p_blog.id as p_blog_id, p_blog.user_id as p_blog_user_id, p_blog.title as p_blog_title, 
+    p_blog.description as p_blog_description, p_blog.content as p_blog_content, p_blog.created as p_blog_created, 
+    p_blog.`status` as `p_blog_status`
+  </sql>
+  <select id="selectByExample" parameterType="com.commune.paris.entity.PBlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_blog p_blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_blog p_blog
+    where p_blog.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from p_blog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.commune.paris.entity.PBlogExample">
+    delete from p_blog p_blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.commune.paris.entity.PBlog">
+    insert into p_blog (id, user_id, title, 
+      description, content, created, 
+      `status`)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.commune.paris.entity.PBlog">
+    insert into p_blog
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.commune.paris.entity.PBlogExample" resultType="java.lang.Long">
+    select count(*) from p_blog p_blog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p_blog p_blog
+    <set>
+      <if test="record.id != null">
+        p_blog.id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        p_blog.user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        p_blog.title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null">
+        p_blog.description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.content != null">
+        p_blog.content = #{record.content,jdbcType=VARCHAR},
+      </if>
+      <if test="record.created != null">
+        p_blog.created = #{record.created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null">
+        p_blog.`status` = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p_blog p_blog
+    set p_blog.id = #{record.id,jdbcType=INTEGER},
+      p_blog.user_id = #{record.userId,jdbcType=INTEGER},
+      p_blog.title = #{record.title,jdbcType=VARCHAR},
+      p_blog.description = #{record.description,jdbcType=VARCHAR},
+      p_blog.content = #{record.content,jdbcType=VARCHAR},
+      p_blog.created = #{record.created,jdbcType=TIMESTAMP},
+      p_blog.`status` = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.commune.paris.entity.PBlog">
+    update p_blog
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.commune.paris.entity.PBlog">
+    update p_blog
+    set user_id = #{userId,jdbcType=INTEGER},
+      title = #{title,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      created = #{created,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
