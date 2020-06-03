@@ -111,7 +111,7 @@
       #{description,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, 
       #{status,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.commune.paris.entity.PBlog">
+  <insert id="insertSelective" parameterType="com.commune.paris.entity.PBlog" useGeneratedKeys="true" keyProperty="id">
     insert into p_blog
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -242,4 +242,14 @@
       `status` = #{status,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="countAll" parameterType="map" resultType="int" >
+    select count(1)
+    from p_blog p_blog
+  </select>
+  <select id="getBlogByPage" parameterType="map" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p_blog
+    limit #{page.offset},#{page.pageSize}
+  </select>
 </mapper>

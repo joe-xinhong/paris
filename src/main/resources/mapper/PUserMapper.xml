@@ -257,4 +257,14 @@
       last_login = #{lastLogin,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="countAll" parameterType="map" resultType="int" >
+    select count(1)
+    from p_user p_user
+  </select>
+  <select id="getUserByPage" parameterType="map" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p_user p_user
+    limit #{page.offset},#{page.pageSize}
+  </select>
 </mapper>

@@ -4,6 +4,7 @@ import com.commune.paris.entity.PUser;
 import com.commune.paris.entity.PUserExample;
 import java.util.List;
 
+import com.commune.paris.utils.PageQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,8 @@ public interface PUserMapper {
     int updateByPrimaryKeySelective(PUser record);
 
     int updateByPrimaryKey(PUser record);
+
+    Integer countAll();
+
+    List<PUser> getUserByPage(@Param("page")PageQuery page);
 }

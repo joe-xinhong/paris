@@ -4,6 +4,7 @@ import com.commune.paris.entity.PBlog;
 import com.commune.paris.entity.PBlogExample;
 import java.util.List;
 
+import com.commune.paris.utils.PageQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,8 @@ public interface PBlogMapper {
     int updateByPrimaryKeySelective(PBlog record);
 
     int updateByPrimaryKey(PBlog record);
+
+    Integer countAll();
+
+    List<PBlog> getBlogByPage(@Param("page")PageQuery page);
 }
