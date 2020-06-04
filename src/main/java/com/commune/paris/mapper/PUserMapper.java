@@ -22,7 +22,7 @@ public interface PUserMapper {
 
     List<PUser> selectByExample(PUserExample example);
 
-    PUser selectByPrimaryKey(Integer id);
+    PUser selectByPrimaryKey(@Param("id")Integer id);
 
     int updateByExampleSelective(@Param("record") PUser record, @Param("example") PUserExample example);
 
