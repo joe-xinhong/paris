@@ -2,6 +2,7 @@ package com.commune.paris.controller;
 
 import com.commune.paris.entity.PUser;
 import com.commune.paris.service.IUserService;
+import com.commune.paris.utils.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,9 +17,10 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+
     @RequestMapping(value = "/getOne/{id}",method = RequestMethod.GET,name = "根据id获取博主信息")
-    public PUser getOne(@PathVariable("id") Integer id){
+    public Result getOne(@PathVariable("id") Integer id){
         PUser user = userService.getOne(id);
-        return user;
+        return Result.success(user);
     }
 }
