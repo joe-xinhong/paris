@@ -39,6 +39,7 @@ public class AccountController {
             return Result.fail("密码不正确");
         }
         String jwt = jwtUtils.generateToken(user.getId());
+        log.info("登录生成的jwt:{}",jwt);
         response.setHeader("Authorization",jwt);
         response.setHeader("Access-control-Expose-Headers","Authorization");
         return Result.success(MapUtil.builder()

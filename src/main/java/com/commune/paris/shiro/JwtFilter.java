@@ -1,10 +1,10 @@
 package com.commune.paris.shiro;
 
-import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONUtil;
 import com.commune.paris.utils.JwtUtils;
 import com.commune.paris.utils.Result;
 import io.jsonwebtoken.Claims;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
+@Slf4j
 public class JwtFilter extends AuthenticatingFilter {
 
     @Autowired
@@ -42,7 +43,8 @@ public class JwtFilter extends AuthenticatingFilter {
     protected boolean onAccessDenied(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         //判断用户是否过期
         HttpServletRequest request = (HttpServletRequest)servletRequest;
-        String jwt = request.getHeader("Auhtorization");
+        String jwt = request.getHeader("Authorization");
+        log.info("传入的jwt:{}",jwt);
         if (StringUtils.isEmpty(jwt)){
             return true;
         }else {
