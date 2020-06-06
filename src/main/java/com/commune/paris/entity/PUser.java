@@ -1,5 +1,11 @@
 package com.commune.paris.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -7,6 +13,7 @@ import java.util.Date;
  * p_user
  * @author 
  */
+@Data
 public class PUser implements Serializable {
     /**
      * 用户id
@@ -16,6 +23,7 @@ public class PUser implements Serializable {
     /**
      * 用户名
      */
+    @NotBlank(message = "昵称不能为空")
     private String username;
 
     /**
@@ -26,6 +34,8 @@ public class PUser implements Serializable {
     /**
      * 邮箱
      */
+    @NotBlank(message = "邮箱不能为空")
+    @Email(message = "邮箱格式不正确")
     private String email;
 
     /**
@@ -41,11 +51,13 @@ public class PUser implements Serializable {
     /**
      * 注册时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date created;
 
     /**
      * 上次登录时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date lastLogin;
 
     private static final long serialVersionUID = 1L;

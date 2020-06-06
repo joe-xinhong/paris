@@ -1,5 +1,7 @@
 package com.commune.paris.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
@@ -29,7 +31,7 @@ public class PBlog implements Serializable {
      * 内容
      */
     private String content;
-
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date created;
 
     private Integer status;
