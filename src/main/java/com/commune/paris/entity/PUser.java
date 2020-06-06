@@ -27,7 +27,7 @@ public class PUser implements Serializable {
     private String username;
 
     /**
-     * 作者
+     * 头像
      */
     private String avatar;
 
