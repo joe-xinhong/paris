@@ -14,15 +14,9 @@ mybatis:
 shiro-redis:
   enabled: true
   redis-manager:
-    host: 106.52.34.17:6379
-    password: 123456
+    host: 127.0.0.1:6379
 
 
 server:
   port: 8081
 
-markerhub:
-  jwt:
-    secret: 121242454545451545
-    expire: 604800
-    header: Auhtorization

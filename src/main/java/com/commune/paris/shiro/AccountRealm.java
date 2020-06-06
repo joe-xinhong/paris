@@ -35,6 +35,7 @@ public class AccountRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         JwtToken jwtToken = (JwtToken)token;
+
         String userId = jwtUtils.getClaimByToken((String) jwtToken.getPrincipal()).getSubject();
         log.info("登录用户id:{}"+userId);
         PUser user = userService.getOne(Integer.parseInt(userId));

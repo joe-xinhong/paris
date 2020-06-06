@@ -22,18 +22,18 @@ public class JwtUtils {
     /**
      * 秘钥
      */
-    @Value("${markerhub.jwt.secret}")
-    private String secret;
+    //@Value("${markerhub.jwt.secret}")
+    private String secret="f4e2e52034348f86b67cde581c0f9eb5";
     /**
      * 有效时长
      */
-    @Value("${markerhub.jwt.expire}")
-    private long expire;
+    //@Value("${markerhub.jwt.expire}")
+    private long expire=604800;
     /**
      * header
      */
-    @Value("${markerhub.jwt.header}")
-    private String header;
+    //@Value("${markerhub.jwt.header}")
+    private String header="Authorization";
 
     /**
      * 生成jwt token
