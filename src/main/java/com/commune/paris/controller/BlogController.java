@@ -4,9 +4,9 @@ import com.commune.paris.entity.PBlog;
 import com.commune.paris.service.IBlogService;
 import com.commune.paris.utils.PageQuery;
 import com.commune.paris.utils.Result;
+import com.commune.paris.utils.ReturnData;
 import com.commune.paris.utils.ShiroUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresAuthentication;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ public class BlogController {
     public Result list(@RequestParam(defaultValue = "1") Integer currentPage){
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNo(currentPage);
-        List<PBlog> pBlogList = blogService.getListByPage(pageQuery);
+        ReturnData<PBlog> pBlogList = blogService.getListByPage(pageQuery);
         return Result.success(pBlogList);
     }
 

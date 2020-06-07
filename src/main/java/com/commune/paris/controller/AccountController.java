@@ -24,7 +24,6 @@ import javax.servlet.http.HttpServletResponse;
 @Slf4j
 @RequestMapping(value = "/paris",name = "/博文主业务")
 public class AccountController {
-
     @Autowired
     IUserService userService;
     @Autowired
