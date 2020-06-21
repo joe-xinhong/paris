@@ -1,9 +1,12 @@
 package com.commune.paris.dto;
 
+import com.commune.paris.entity.PRole;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class UserDTO {
@@ -45,4 +48,8 @@ public class UserDTO {
      */
     @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date lastLogin;
+    /**
+     * 用户角色集合
+     */
+    private List<PRole> roles = new ArrayList<>();
 }

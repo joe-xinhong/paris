@@ -34,6 +34,12 @@ public class PermissionServiceImpl implements IPermissionService {
         return Result.success(permissions);
     }
 
+    @Override
+    public PPermission getById(Integer id) {
+        PPermission pPermission = permissionMapper.selectByPrimaryKey(id);
+        return pPermission;
+    }
+
     /**
      * 根据类型获取不同权限集合
      * @param type=1菜单；type=2 接口

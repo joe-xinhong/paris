@@ -2,9 +2,10 @@ package com.commune.paris.service.impl;
 
 import cn.hutool.crypto.SecureUtil;
 import com.commune.paris.dto.UserDTO;
-import com.commune.paris.entity.PUser;
-import com.commune.paris.entity.PUserExample;
+import com.commune.paris.entity.*;
+import com.commune.paris.mapper.PRoleUserMapper;
 import com.commune.paris.mapper.PUserMapper;
+import com.commune.paris.service.IRoleService;
 import com.commune.paris.service.IUserService;
 import com.commune.paris.utils.PageQuery;
 import com.commune.paris.utils.Result;
@@ -24,6 +25,10 @@ public class UserServiceImpl implements IUserService {
 
     @Autowired
     private PUserMapper userMapper;
+    @Autowired
+    private PRoleUserMapper roleUserMapper;
+    @Autowired
+    private IRoleService roleService;
 
     @Override
     public PUser getOne(Integer id) {
@@ -31,7 +36,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public PUser getByname(String username) {
+    public PUser getByName(String username) {
         PUserExample example = new PUserExample();
         example.createCriteria().andUsernameEqualTo(username);
         List<PUser> pUsers = userMapper.selectByExample(example);
@@ -45,8 +50,8 @@ public class UserServiceImpl implements IUserService {
     public ReturnData<UserDTO> getListByPage(String query,PageQuery pageQuery) {
         ReturnData<UserDTO> userReturnData = new ReturnData<>();
         Integer count = userMapper.countAll(query);
-        List<PUser> blogs = userMapper.getUserByPage(query,pageQuery);
-        List<UserDTO> userDTOS = blogs.stream().map(user -> {
+        List<PUser> pUsers = userMapper.getUserByPage(query,pageQuery);
+        List<UserDTO> userDTOS = pUsers.stream().map(user -> {
             UserDTO userDTO = getUserDO(user);
             return userDTO;
         }).collect(Collectors.toList());
@@ -67,7 +72,7 @@ public class UserServiceImpl implements IUserService {
         user.setLastLogin(new Date());
         user.setCreated(new Date());
         user.setStatus(1);
-        int i = userMapper.insertSelective(user);
+        userMapper.insertSelective(user);
         return user;
     }
 
@@ -116,8 +121,18 @@ public class UserServiceImpl implements IUserService {
             return null;
         }
         UserDTO userDTO = new UserDTO();
+        PRoleUserExample example = new PRoleUserExample();
+        example.createCriteria().andUserIdEqualTo(user.getId());
+        List<PRoleUser> roleUsers = roleUserMapper.selectByExample(example);
         BeanUtils.copyProperties(user,userDTO);
         userDTO.setStatus(getInteger(user.getStatus()));
+        if (!roleUsers.isEmpty()){
+            List<PRole> roles = roleUsers.stream().map(roleUser -> {
+                PRole role = roleService.getById(roleUser.getRoleId());
+                return role;
+            }).collect(Collectors.toList());
+            userDTO.setRoles(roles);
+        }
         return userDTO;
     }
 

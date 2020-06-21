@@ -9,7 +9,7 @@ import com.commune.paris.utils.ReturnData;
 public interface IUserService {
     PUser getOne(Integer id);
 
-    PUser getByname(String username);
+    PUser getByName(String username);
 
     ReturnData<UserDTO> getListByPage(String query, PageQuery pageQuery);
 

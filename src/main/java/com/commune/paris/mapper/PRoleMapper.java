@@ -4,6 +4,7 @@ import com.commune.paris.entity.PRole;
 import com.commune.paris.entity.PRoleExample;
 import java.util.List;
 
+import com.commune.paris.utils.PageQuery;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -30,4 +31,8 @@ public interface PRoleMapper {
     int updateByPrimaryKeySelective(PRole record);
 
     int updateByPrimaryKey(PRole record);
+
+    Integer countAll(@Param("name")String name);
+
+    List<PRole> getRoleByPage(@Param("name")String name, @Param("page")PageQuery page);
 }

@@ -209,4 +209,20 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="countAll" parameterType="map" resultType="int" >
+    select count(1)
+    from p_role
+    <if test="name != null">
+      where name like "%"#{name}"%"
+    </if>
+  </select>
+  <select id="getRoleByPage" parameterType="map" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p_role
+    <if test="name != null">
+      where name like "%"#{name}"%"
+    </if>
+    limit #{page.offset},#{page.pageSize}
+  </select>
 </mapper>

@@ -31,7 +31,7 @@ public class AccountController {
 
     @RequestMapping(value = "/login",method = RequestMethod.POST,name = "登录")
     public Result login(@Validated @RequestBody LoginDTO loginDTO, HttpServletResponse response){
-        PUser user = userService.getByname(loginDTO.getUsername());
+        PUser user = userService.getByName(loginDTO.getUsername());
         Assert.notNull(user,"用户不存在");
         log.info("输入的明码:{}",loginDTO.getPassword());
         log.info("密码加密后:{}",SecureUtil.md5(loginDTO.getPassword()));
