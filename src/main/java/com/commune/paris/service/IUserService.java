@@ -16,4 +16,8 @@ public interface IUserService {
     PUser save(PUser user);
 
     Result UpdateState(Integer id, Boolean status);
+
+    Result updateUser(PUser pUser);
+
+    Result deleteById(Integer id);
 }

@@ -3,10 +3,11 @@ package com.commune.paris.mapper;
 import com.commune.paris.entity.PRole;
 import com.commune.paris.entity.PRoleExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+@Mapper
 public interface PRoleMapper {
     long countByExample(PRoleExample example);
 

@@ -22,11 +22,27 @@ public class PermissionServiceImpl implements IPermissionService {
 
     @Override
     public Result findAllMenu() {
-        PPermissionExample pExample = new PPermissionExample();
-        pExample.createCriteria().andTypeEqualTo(1);
-        List<PPermission> permissions = permissionMapper.selectByExample(pExample);
+        List<PPermission> permissions = getAll(1);
         JSONArray array = new JSONArray();
         TreeUtils.setPermissionsTree(0,permissions,array);
         return Result.success(array);
+    }
+
+    @Override
+    public Result findAllList() {
+        List<PPermission> permissions = getAll(1);
+        return Result.success(permissions);
+    }
+
+    /**
+     * 根据类型获取不同权限集合
+     * @param type=1菜单；type=2 接口
+     * @return
+     */
+    private List<PPermission> getAll(Integer type){
+        PPermissionExample pExample = new PPermissionExample();
+        pExample.createCriteria().andTypeEqualTo(type);
+        List<PPermission> permissions = permissionMapper.selectByExample(pExample);
+        return permissions;
     }
 }

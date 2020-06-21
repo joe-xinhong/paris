@@ -10,16 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping(value = "/permission",name = "权限管理")
+@RequestMapping(value = "/permission",name = "权限接口")
 @Slf4j
 public class PermissionController {
 
     @Autowired
     private IPermissionService permissionService;
 
-    @RequestMapping(value = "/getAllMenu",name = "获取菜单",method = RequestMethod.GET)
+    @RequestMapping(value = "/getAllMenu",name = "获取全部菜单接口",method = RequestMethod.GET)
     public Result getAllMenu(){
         Result result = permissionService.findAllMenu();
+        return result;
+    }
+
+    @RequestMapping(value = "/getAllList",name = "获取全部菜单列表接口",method = RequestMethod.GET)
+    public Result getAllList(){
+        Result result = permissionService.findAllList();
         return result;
     }
 }

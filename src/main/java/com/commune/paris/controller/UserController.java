@@ -13,7 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(value = "/user",name = "博主管理")
+@RequestMapping(value = "/user",name = "博主管理接口")
 @Slf4j
 public class UserController {
 
@@ -21,18 +21,18 @@ public class UserController {
     private IUserService userService;
 
     @RequiresAuthentication
-    @RequestMapping(value = "/getOne/{id}",method = RequestMethod.GET,name = "根据id获取博主信息")
+    @RequestMapping(value = "/getOne/{id}",method = RequestMethod.GET,name = "根据id获取博主信息接口")
     public Result getOne(@PathVariable("id") Integer id){
         PUser user = userService.getOne(id);
         return Result.success(user);
     }
 
-    @RequestMapping(value = "/save",method = RequestMethod.POST,name = "新增博主")
+    @RequestMapping(value = "/save",method = RequestMethod.POST,name = "新增博主接口")
     public Result save(@Validated @RequestBody PUser user){
         PUser save = userService.save(user);
         return Result.success(save);
     }
-    @RequestMapping(value = "/users",method = RequestMethod.GET,name = "分页查询用户列表")
+    @RequestMapping(value = "/users",method = RequestMethod.GET,name = "按条件分页查询用户列表接口")
     public Result list(@RequestParam(defaultValue = "1") Integer currentPage,@RequestParam Integer pageSize,@RequestParam String query){
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNo(currentPage);
@@ -42,9 +42,24 @@ public class UserController {
         ReturnData<UserDTO> userList = userService.getListByPage(query,pageQuery);
         return Result.success(userList);
     }
-    @RequestMapping(value = "/{id}/state/{status}",method = RequestMethod.PUT,name = "修改用户状态")
+    @RequestMapping(value = "/{id}/state/{status}",method = RequestMethod.PUT,name = "修改用户状态接口")
     public Result updateState(@PathVariable("id")Integer id,@PathVariable("status")Boolean status){
         Result result = userService.UpdateState(id,status);
+        return result;
+    }
+    @RequestMapping(value = "/updateUser",method = RequestMethod.PUT,name = "修改用户信息接口")
+    public Result updateUser(@RequestParam Integer id, @RequestParam String avatar, @RequestParam String email){
+        PUser pUser = new PUser();
+        pUser.setId(id);
+        pUser.setAvatar(avatar);
+        pUser.setEmail(email);
+        Result result = userService.updateUser(pUser);
+        return result;
+    }
+
+    @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE,name = "删除用户接口")
+    public Result updateUser(@PathVariable("id") Integer id){
+        Result result = userService.deleteById(id);
         return result;
     }
 

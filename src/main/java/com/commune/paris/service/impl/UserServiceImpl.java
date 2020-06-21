@@ -88,6 +88,29 @@ public class UserServiceImpl implements IUserService {
         return Result.success(i);
     }
 
+    @Override
+    public Result updateUser(PUser pUser) {
+        if (pUser==null||pUser.getId()==null){
+            return Result.fail("信息有误");
+        }
+        PUser pUser1 = userMapper.selectByPrimaryKey(pUser.getId());
+        if (pUser1==null){
+            return Result.fail("用户信息不存在");
+        }
+        int i = userMapper.updateByPrimaryKeySelective(pUser);
+        return Result.success(i);
+    }
+
+    @Override
+    public Result deleteById(Integer id) {
+        PUser pUser1 = userMapper.selectByPrimaryKey(id);
+        if (pUser1==null){
+            return Result.fail("用户信息不存在");
+        }
+        int i = userMapper.deleteByPrimaryKey(id);
+        return Result.success(i);
+    }
+
     private UserDTO getUserDO(PUser user){
         if (user==null){
             return null;

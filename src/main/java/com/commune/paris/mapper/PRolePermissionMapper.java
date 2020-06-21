@@ -3,10 +3,11 @@ package com.commune.paris.mapper;
 import com.commune.paris.entity.PRolePermission;
 import com.commune.paris.entity.PRolePermissionExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
-@Repository
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
+@Mapper
 public interface PRolePermissionMapper {
     long countByExample(PRolePermissionExample example);
 
