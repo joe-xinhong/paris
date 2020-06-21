@@ -15,16 +15,19 @@ public class Result implements Serializable {
     private String msg;
     private Object data;
 
+
+    public Result(Integer code, String msg, Object data) {
+        this.code = code;
+        this.msg = msg;
+        this.data = data;
+    }
+
     public static Result success(Object data){
         return success(200,"操作成功",data);
     }
 
     public static Result success(Integer code, String msg, Object data){
-        Result result = new Result();
-        result.setCode(code);
-        result.setMsg(msg);
-        result.setData(data);
-        return result;
+        return new Result(code,msg,data);
     }
 
     public static Result fail(String msg){
@@ -36,11 +39,7 @@ public class Result implements Serializable {
     }
 
     public static Result fail(Integer code, String msg, Object data){
-        Result result = new Result();
-        result.setCode(code);
-        result.setMsg(msg);
-        result.setData(data);
-        return result;
+        return new Result(code,msg,data);
     }
 
 }

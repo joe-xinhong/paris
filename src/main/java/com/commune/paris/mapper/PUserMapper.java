@@ -32,7 +32,7 @@ public interface PUserMapper {
 
     int updateByPrimaryKey(PUser record);
 
-    Integer countAll();
+    Integer countAll(@Param("username")String username);
 
-    List<PUser> getUserByPage(@Param("page")PageQuery page);
+    List<PUser> getUserByPage(@Param("username")String username, @Param("page")PageQuery page);
 }

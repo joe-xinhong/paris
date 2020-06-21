@@ -18,6 +18,6 @@ public class PageQuery {
     private Integer offset;
 
     public Integer getOffset(){
-        return (pageNo - 1) *10;
+        return (pageNo - 1) *pageSize;
     }
 }

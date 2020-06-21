@@ -33,7 +33,9 @@ public class AccountController {
     public Result login(@Validated @RequestBody LoginDTO loginDTO, HttpServletResponse response){
         PUser user = userService.getByname(loginDTO.getUsername());
         Assert.notNull(user,"用户不存在");
+        log.info("输入的明码:{}",loginDTO.getPassword());
         log.info("密码加密后:{}",SecureUtil.md5(loginDTO.getPassword()));
+        log.info("用户密码:{}",user.getPassword());
         if (!user.getPassword().equals(SecureUtil.md5(loginDTO.getPassword()))){
             return Result.fail("密码不正确");
         }

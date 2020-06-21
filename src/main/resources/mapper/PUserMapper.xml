@@ -112,7 +112,7 @@
       #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
       #{created,jdbcType=TIMESTAMP}, #{lastLogin,jdbcType=TIMESTAMP})
   </insert>
-  <insert id="insertSelective" parameterType="com.commune.paris.entity.PUser">
+  <insert id="insertSelective" parameterType="com.commune.paris.entity.PUser" useGeneratedKeys="true" keyProperty="id">
     insert into p_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -260,11 +260,17 @@
   <select id="countAll" parameterType="map" resultType="int" >
     select count(1)
     from p_user p_user
+    <if test="username != null">
+      where username like "%"#{username}"%"
+    </if>
   </select>
   <select id="getUserByPage" parameterType="map" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
     from p_user p_user
+    <if test="username != null">
+      where username like "%"#{username}"%"
+    </if>
     limit #{page.offset},#{page.pageSize}
   </select>
 </mapper>
