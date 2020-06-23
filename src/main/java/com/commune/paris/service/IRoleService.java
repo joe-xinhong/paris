@@ -1,12 +1,22 @@
 package com.commune.paris.service;
 
-import com.commune.paris.dto.RoleDTO;
 import com.commune.paris.entity.PRole;
-import com.commune.paris.utils.PageQuery;
-import com.commune.paris.utils.ReturnData;
+import com.commune.paris.utils.Result;
 
 public interface IRoleService {
-    ReturnData<RoleDTO> getListByPage(String query, PageQuery pageQuery);
+    Result getListByList();
 
     PRole getById(Integer id);
+
+    PRole save(PRole role);
+
+    Result getRoleById(Integer id);
+
+    Result updateRole(PRole role);
+
+    Result deleteById(Integer id);
+
+    Result deletePermission(Integer id, Integer pId);
+
+    Result updatePermission(Integer id, String ids);
 }

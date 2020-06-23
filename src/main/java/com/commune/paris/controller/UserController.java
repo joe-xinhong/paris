@@ -27,13 +27,19 @@ public class UserController {
         return Result.success(user);
     }
 
+    @RequestMapping(value = "/getUser/{id}",method = RequestMethod.GET,name = "根据id获取用户信息接口")
+    public Result getUser(@PathVariable("id") Integer id){
+        Result result = userService.getUserById(id);
+        return result;
+    }
+
     @RequestMapping(value = "/save",method = RequestMethod.POST,name = "新增博主接口")
     public Result save(@Validated @RequestBody PUser user){
         PUser save = userService.save(user);
         return Result.success(save);
     }
     @RequestMapping(value = "/users",method = RequestMethod.GET,name = "按条件分页查询用户列表接口")
-    public Result list(@RequestParam(defaultValue = "1") Integer currentPage,@RequestParam Integer pageSize,@RequestParam String query){
+    public Result list(@RequestParam(defaultValue = "1") Integer currentPage,@RequestParam Integer pageSize,@RequestParam(required = false) String query){
         PageQuery pageQuery = new PageQuery();
         pageQuery.setPageNo(currentPage);
         if (pageSize!=null){
@@ -47,19 +53,25 @@ public class UserController {
         Result result = userService.UpdateState(id,status);
         return result;
     }
-    @RequestMapping(value = "/updateUser",method = RequestMethod.PUT,name = "修改用户信息接口")
-    public Result updateUser(@RequestParam Integer id, @RequestParam String avatar, @RequestParam String email){
-        PUser pUser = new PUser();
-        pUser.setId(id);
-        pUser.setAvatar(avatar);
-        pUser.setEmail(email);
-        Result result = userService.updateUser(pUser);
+    @RequestMapping(value = "/updateUser/{id}",method = RequestMethod.PUT,name = "修改用户信息接口")
+    public Result updateUser(@PathVariable("id") Integer id, @RequestBody PUser user){
+        if (user==null){
+            return Result.fail("无修改信息");
+        }
+        user.setId(id);
+        Result result = userService.updateUser(user);
         return result;
     }
 
     @RequestMapping(value = "/delete/{id}",method = RequestMethod.DELETE,name = "删除用户接口")
-    public Result updateUser(@PathVariable("id") Integer id){
+    public Result delete(@PathVariable("id") Integer id){
         Result result = userService.deleteById(id);
+        return result;
+    }
+
+    @RequestMapping(value = "/updateRole/{id}",method = RequestMethod.PUT,name = "分配角色权限接口")
+    public Result updateRole(@PathVariable("id") Integer id, @RequestParam Integer rId){
+        Result result = userService.updateRole(id,rId);
         return result;
     }
 

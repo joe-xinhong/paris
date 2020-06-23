@@ -40,6 +40,14 @@ public class PermissionServiceImpl implements IPermissionService {
         return pPermission;
     }
 
+    @Override
+    public List<PPermission> getByParentId(Integer id) {
+        PPermissionExample example = new PPermissionExample();
+        example.createCriteria().andParentIdEqualTo(id);
+        List<PPermission> permissions = permissionMapper.selectByExample(example);
+        return permissions;
+    }
+
     /**
      * 根据类型获取不同权限集合
      * @param type=1菜单；type=2 接口
@@ -48,6 +56,7 @@ public class PermissionServiceImpl implements IPermissionService {
     private List<PPermission> getAll(Integer type){
         PPermissionExample pExample = new PPermissionExample();
         pExample.createCriteria().andTypeEqualTo(type);
+        pExample.setOrderByClause("sort asc");
         List<PPermission> permissions = permissionMapper.selectByExample(pExample);
         return permissions;
     }

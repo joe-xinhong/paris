@@ -10,6 +10,7 @@
     <result column="p_permission_type" jdbcType="INTEGER" property="type" />
     <result column="p_permission_permission" jdbcType="VARCHAR" property="permission" />
     <result column="p_permission_sort" jdbcType="INTEGER" property="sort" />
+    <result column="p_permission_level" jdbcType="INTEGER" property="level" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -73,7 +74,8 @@
     p_permission.id as p_permission_id, p_permission.parent_id as p_permission_parent_id, 
     p_permission.`name` as `p_permission_name`, p_permission.css as p_permission_css, 
     p_permission.href as p_permission_href, p_permission.`type` as `p_permission_type`, 
-    p_permission.permission as p_permission_permission, p_permission.sort as p_permission_sort
+    p_permission.permission as p_permission_permission, p_permission.sort as p_permission_sort, 
+    p_permission.`level` as `p_permission_level`
   </sql>
   <select id="selectByExample" parameterType="com.commune.paris.entity.PPermissionExample" resultMap="BaseResultMap">
     select
@@ -108,12 +110,12 @@
   <insert id="insert" parameterType="com.commune.paris.entity.PPermission">
     insert into p_permission (id, parent_id, `name`, 
       css, href, `type`, permission, 
-      sort)
+      sort, `level`)
     values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{css,jdbcType=VARCHAR}, #{href,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{permission,jdbcType=VARCHAR}, 
-      #{sort,jdbcType=INTEGER})
+      #{sort,jdbcType=INTEGER}, #{level,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.commune.paris.entity.PPermission">
+  <insert id="insertSelective" parameterType="com.commune.paris.entity.PPermission" useGeneratedKeys="true" keyProperty="id">
     insert into p_permission
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -140,6 +142,9 @@
       <if test="sort != null">
         sort,
       </if>
+      <if test="level != null">
+        `level`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -165,6 +170,9 @@
       </if>
       <if test="sort != null">
         #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -201,6 +209,9 @@
       <if test="record.sort != null">
         p_permission.sort = #{record.sort,jdbcType=INTEGER},
       </if>
+      <if test="record.level != null">
+        p_permission.`level` = #{record.level,jdbcType=INTEGER},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -215,7 +226,8 @@
       p_permission.href = #{record.href,jdbcType=VARCHAR},
       p_permission.`type` = #{record.type,jdbcType=INTEGER},
       p_permission.permission = #{record.permission,jdbcType=VARCHAR},
-      p_permission.sort = #{record.sort,jdbcType=INTEGER}
+      p_permission.sort = #{record.sort,jdbcType=INTEGER},
+      p_permission.`level` = #{record.level,jdbcType=INTEGER}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -244,6 +256,9 @@
       <if test="sort != null">
         sort = #{sort,jdbcType=INTEGER},
       </if>
+      <if test="level != null">
+        `level` = #{level,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -255,7 +270,8 @@
       href = #{href,jdbcType=VARCHAR},
       `type` = #{type,jdbcType=INTEGER},
       permission = #{permission,jdbcType=VARCHAR},
-      sort = #{sort,jdbcType=INTEGER}
+      sort = #{sort,jdbcType=INTEGER},
+      `level` = #{level,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

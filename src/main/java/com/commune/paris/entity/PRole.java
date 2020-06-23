@@ -1,5 +1,8 @@
 package com.commune.paris.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -16,6 +19,7 @@ public class PRole implements Serializable {
     /**
      * 角色名称
      */
+    @NotBlank(message = "角色名称不能为空")
     private String name;
 
     /**
@@ -26,11 +30,13 @@ public class PRole implements Serializable {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createTime;
 
     /**
      * 修改时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;

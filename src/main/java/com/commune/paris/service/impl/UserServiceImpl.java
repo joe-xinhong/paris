@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,13 @@ public class UserServiceImpl implements IUserService {
     private PRoleUserMapper roleUserMapper;
     @Autowired
     private IRoleService roleService;
+
+    @Override
+    public Result getUserById(Integer id) {
+        PUser user = userMapper.selectByPrimaryKey(id);
+        UserDTO userDTO = getUserDO(user);
+        return Result.success(userDTO);
+    }
 
     @Override
     public PUser getOne(Integer id) {
@@ -113,6 +121,30 @@ public class UserServiceImpl implements IUserService {
             return Result.fail("用户信息不存在");
         }
         int i = userMapper.deleteByPrimaryKey(id);
+        return Result.success(i);
+    }
+
+    @Override
+    @Transactional
+    public Result updateRole(Integer id, Integer rId) {
+        PUser pUser = userMapper.selectByPrimaryKey(id);
+        if (pUser==null){
+            return Result.fail("信息有误");
+        }
+        PRole role = roleService.getById(rId);
+        if (role == null){
+            return Result.fail("信息有误");
+        }
+        PRoleUserExample example = new PRoleUserExample();
+        example.createCriteria().andRoleIdEqualTo(rId).andUserIdEqualTo(id);
+        List<PRoleUser> roleUsers = roleUserMapper.selectByExample(example);
+        if (!roleUsers.isEmpty()){
+            roleUserMapper.deleteByExample(example);
+        }
+        PRoleUser roleUser = new PRoleUser();
+        roleUser.setUserId(id);
+        roleUser.setRoleId(rId);
+        int i = roleUserMapper.insert(roleUser);
         return Result.success(i);
     }
 

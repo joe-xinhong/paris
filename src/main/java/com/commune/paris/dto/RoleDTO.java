@@ -1,6 +1,8 @@
 package com.commune.paris.dto;
 
+import com.alibaba.fastjson.JSONArray;
 import com.commune.paris.entity.PPermission;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -27,14 +29,16 @@ public class RoleDTO {
     /**
      * 创建时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date createTime;
 
     /**
      * 修改时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date updateTime;
     /**
      * 对应权限集合
      */
-    private List<PPermission> permissions=new ArrayList<>();
+    private JSONArray array = new JSONArray();
 }

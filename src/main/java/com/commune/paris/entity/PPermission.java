@@ -47,6 +47,11 @@ public class PPermission implements Serializable {
      */
     private Integer sort;
 
+    /**
+     * 等级；1；2；3
+     */
+    private Integer level;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -113,6 +118,14 @@ public class PPermission implements Serializable {
         this.sort = sort;
     }
 
+    public Integer getLevel() {
+        return level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -132,7 +145,8 @@ public class PPermission implements Serializable {
             && (this.getHref() == null ? other.getHref() == null : this.getHref().equals(other.getHref()))
             && (this.getType() == null ? other.getType() == null : this.getType().equals(other.getType()))
             && (this.getPermission() == null ? other.getPermission() == null : this.getPermission().equals(other.getPermission()))
-            && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()));
+            && (this.getSort() == null ? other.getSort() == null : this.getSort().equals(other.getSort()))
+            && (this.getLevel() == null ? other.getLevel() == null : this.getLevel().equals(other.getLevel()));
     }
 
     @Override
@@ -147,6 +161,7 @@ public class PPermission implements Serializable {
         result = prime * result + ((getType() == null) ? 0 : getType().hashCode());
         result = prime * result + ((getPermission() == null) ? 0 : getPermission().hashCode());
         result = prime * result + ((getSort() == null) ? 0 : getSort().hashCode());
+        result = prime * result + ((getLevel() == null) ? 0 : getLevel().hashCode());
         return result;
     }
 
@@ -164,6 +179,7 @@ public class PPermission implements Serializable {
         sb.append(", type=").append(type);
         sb.append(", permission=").append(permission);
         sb.append(", sort=").append(sort);
+        sb.append(", level=").append(level);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();
