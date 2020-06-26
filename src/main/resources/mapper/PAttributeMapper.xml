@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.commune.paris.mapper.PAttributeMapper">
+  <resultMap id="BaseResultMap" type="com.commune.paris.entity.PAttribute">
+    <id column="p_attribute_id" jdbcType="INTEGER" property="id" />
+    <result column="p_attribute_name" jdbcType="VARCHAR" property="name" />
+    <result column="p_attribute_cate_id" jdbcType="INTEGER" property="cateId" />
+    <result column="p_attribute_sel" jdbcType="VARCHAR" property="sel" />
+    <result column="p_attribute_write" jdbcType="VARCHAR" property="write" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    p_attribute.id as p_attribute_id, p_attribute.`name` as `p_attribute_name`, p_attribute.cate_id as p_attribute_cate_id, 
+    p_attribute.sel as p_attribute_sel, p_attribute.`write` as `p_attribute_write`
+  </sql>
+  <select id="selectByExample" parameterType="com.commune.paris.entity.PAttributeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_attribute p_attribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_attribute p_attribute
+    where p_attribute.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from p_attribute
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.commune.paris.entity.PAttributeExample">
+    delete from p_attribute p_attribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.commune.paris.entity.PAttribute">
+    insert into p_attribute (id, `name`, cate_id, 
+      sel, `write`)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{cateId,jdbcType=INTEGER}, 
+      #{sel,jdbcType=VARCHAR}, #{write,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.commune.paris.entity.PAttribute" useGeneratedKeys="true" keyProperty="id">
+    insert into p_attribute
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        `name`,
+      </if>
+      <if test="cateId != null">
+        cate_id,
+      </if>
+      <if test="sel != null">
+        sel,
+      </if>
+      <if test="write != null">
+        `write`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cateId != null">
+        #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="sel != null">
+        #{sel,jdbcType=VARCHAR},
+      </if>
+      <if test="write != null">
+        #{write,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.commune.paris.entity.PAttributeExample" resultType="java.lang.Long">
+    select count(*) from p_attribute p_attribute
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p_attribute p_attribute
+    <set>
+      <if test="record.id != null">
+        p_attribute.id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        p_attribute.`name` = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cateId != null">
+        p_attribute.cate_id = #{record.cateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.sel != null">
+        p_attribute.sel = #{record.sel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.write != null">
+        p_attribute.`write` = #{record.write,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p_attribute p_attribute
+    set p_attribute.id = #{record.id,jdbcType=INTEGER},
+      p_attribute.`name` = #{record.name,jdbcType=VARCHAR},
+      p_attribute.cate_id = #{record.cateId,jdbcType=INTEGER},
+      p_attribute.sel = #{record.sel,jdbcType=VARCHAR},
+      p_attribute.`write` = #{record.write,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.commune.paris.entity.PAttribute">
+    update p_attribute
+    <set>
+      <if test="name != null">
+        `name` = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="cateId != null">
+        cate_id = #{cateId,jdbcType=INTEGER},
+      </if>
+      <if test="sel != null">
+        sel = #{sel,jdbcType=VARCHAR},
+      </if>
+      <if test="write != null">
+        `write` = #{write,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.commune.paris.entity.PAttribute">
+    update p_attribute
+    set `name` = #{name,jdbcType=VARCHAR},
+      cate_id = #{cateId,jdbcType=INTEGER},
+      sel = #{sel,jdbcType=VARCHAR},
+      `write` = #{write,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -40,5 +40,5 @@ public class RoleDTO {
     /**
      * 对应权限集合
      */
-    private JSONArray array = new JSONArray();
+    private JSONArray child = new JSONArray();
 }

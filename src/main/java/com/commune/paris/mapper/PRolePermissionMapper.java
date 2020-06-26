@@ -22,4 +22,10 @@ public interface PRolePermissionMapper {
     int updateByExampleSelective(@Param("record") PRolePermission record, @Param("example") PRolePermissionExample example);
 
     int updateByExample(@Param("record") PRolePermission record, @Param("example") PRolePermissionExample example);
+
+    int delete(PRolePermission record);
+
+    int deleteByRoleId(@Param("roleId")Integer roleId);
+
+    int deleteByPermissionId(@Param("permissionId")Integer permissionId);
 }

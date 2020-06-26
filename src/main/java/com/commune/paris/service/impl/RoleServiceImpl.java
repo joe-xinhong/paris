@@ -95,7 +95,7 @@ public class RoleServiceImpl implements IRoleService {
         roleUserExample.createCriteria().andRoleIdEqualTo(role.getId());
         List<PRoleUser> roleUsers = roleUserMapper.selectByExample(roleUserExample);
         if (!roleUsers.isEmpty()){
-            roleUserMapper.deleteByExample(roleUserExample);
+            roleUserMapper.deleteByRoleId(id);
         }
 
         //3.角色权限表删除对应信息
@@ -103,7 +103,7 @@ public class RoleServiceImpl implements IRoleService {
         rolePermissionExample.createCriteria().andRoleIdEqualTo(role.getId());
         List<PRolePermission> rolePermissions = rolePermissionMapper.selectByExample(rolePermissionExample);
         if (!rolePermissions.isEmpty()){
-            rolePermissionMapper.deleteByExample(rolePermissionExample);
+            rolePermissionMapper.deleteByRoleId(role.getId());
         }
         int i = roleMapper.deleteByPrimaryKey(id);
         return Result.success(i);
@@ -117,7 +117,7 @@ public class RoleServiceImpl implements IRoleService {
         if (role==null){
             Result.fail("信息不存在");
         }
-        //删除对应的权限（是否存在下级权限并删除）
+        //删除该角色对应的权限（是否存在下级权限并删除）
         List<Integer> ids = new ArrayList<>();
 
         ids.add(pId);
@@ -129,13 +129,16 @@ public class RoleServiceImpl implements IRoleService {
             });
         }
         if (ids!=null&& ids.size()>0){
-            PRolePermissionExample rolePermissionExample = new PRolePermissionExample();
-            rolePermissionExample.createCriteria().andPermissionIdIn(ids).andRoleIdEqualTo(id);
-            rolePermissionMapper.deleteByExample(rolePermissionExample);
+            for (int i = 0; i < ids.size(); i++) {
+                PRolePermission rolePermission=new PRolePermission();
+                rolePermission.setRoleId(id);
+                rolePermission.setPermissionId(ids.get(i));
+                rolePermissionMapper.delete(rolePermission);
+            }
         }
         //获取该角色的最新数据并返回
         RoleDTO roleDTO = getRoleDO(role);
-        return Result.success(roleDTO);
+        return Result.success(roleDTO.getChild());
     }
 
     @Override
@@ -150,7 +153,7 @@ public class RoleServiceImpl implements IRoleService {
         rolePermissionExample.createCriteria().andRoleIdEqualTo(role.getId());
         List<PRolePermission> rolePermissions = rolePermissionMapper.selectByExample(rolePermissionExample);
         if (!rolePermissions.isEmpty()){
-            rolePermissionMapper.deleteByExample(rolePermissionExample);
+            rolePermissionMapper.deleteByRoleId(id);
         }
         //将最新的权限添加到关联表
         String[] strings = ids.split(",");
@@ -162,8 +165,9 @@ public class RoleServiceImpl implements IRoleService {
                 rolePermissionMapper.insert(rolePermission);
             }
             return Result.success(null);
+        }else {
+            return Result.fail("信息有误");
         }
-        return Result.fail("信息有误");
     }
 
     /**
@@ -200,7 +204,7 @@ public class RoleServiceImpl implements IRoleService {
             }).collect(Collectors.toList());
             JSONArray array = new JSONArray();
             TreeUtils.setPermissionsTree(0,permissions,array);
-            roleDTO.setArray(array);
+            roleDTO.setChild(array);
         }
         return roleDTO;
     }

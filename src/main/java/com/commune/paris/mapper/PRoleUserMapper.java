@@ -22,4 +22,10 @@ public interface PRoleUserMapper {
     int updateByExampleSelective(@Param("record") PRoleUser record, @Param("example") PRoleUserExample example);
 
     int updateByExample(@Param("record") PRoleUser record, @Param("example") PRoleUserExample example);
+
+    int delete(PRoleUser record);
+
+    int deleteByRoleId(@Param("roleId")Integer roleId);
+
+    int deleteByUserId(@Param("userId")Integer userId);
 }

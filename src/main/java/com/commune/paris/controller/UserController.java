@@ -69,8 +69,8 @@ public class UserController {
         return result;
     }
 
-    @RequestMapping(value = "/updateRole/{id}",method = RequestMethod.PUT,name = "分配角色权限接口")
-    public Result updateRole(@PathVariable("id") Integer id, @RequestParam Integer rId){
+    @RequestMapping(value = "/updateRole/{id}/{rId}",method = RequestMethod.PUT,name = "分配用户角色接口")
+    public Result updateRole(@PathVariable("id") Integer id, @PathVariable("rId") Integer rId){
         Result result = userService.updateRole(id,rId);
         return result;
     }

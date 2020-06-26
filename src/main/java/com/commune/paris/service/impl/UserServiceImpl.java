@@ -115,10 +115,17 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    @Transactional
     public Result deleteById(Integer id) {
         PUser pUser1 = userMapper.selectByPrimaryKey(id);
         if (pUser1==null){
             return Result.fail("用户信息不存在");
+        }
+        PRoleUserExample example = new PRoleUserExample();
+        example.createCriteria().andUserIdEqualTo(id);
+        List<PRoleUser> roleUsers = roleUserMapper.selectByExample(example);
+        if (!roleUsers.isEmpty()){
+            roleUserMapper.deleteByUserId(id);
         }
         int i = userMapper.deleteByPrimaryKey(id);
         return Result.success(i);
@@ -129,17 +136,17 @@ public class UserServiceImpl implements IUserService {
     public Result updateRole(Integer id, Integer rId) {
         PUser pUser = userMapper.selectByPrimaryKey(id);
         if (pUser==null){
-            return Result.fail("信息有误");
+            return Result.fail("用户信息有误");
         }
         PRole role = roleService.getById(rId);
         if (role == null){
-            return Result.fail("信息有误");
+            return Result.fail("角色信息有误");
         }
         PRoleUserExample example = new PRoleUserExample();
-        example.createCriteria().andRoleIdEqualTo(rId).andUserIdEqualTo(id);
+        example.createCriteria().andUserIdEqualTo(id);
         List<PRoleUser> roleUsers = roleUserMapper.selectByExample(example);
         if (!roleUsers.isEmpty()){
-            roleUserMapper.deleteByExample(example);
+            roleUserMapper.deleteByUserId(id);
         }
         PRoleUser roleUser = new PRoleUser();
         roleUser.setUserId(id);
