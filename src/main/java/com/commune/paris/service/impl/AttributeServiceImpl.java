@@ -128,6 +128,14 @@ public class AttributeServiceImpl implements IAttributeService {
         return Result.success(null);
     }
 
+    @Override
+    public List<PAttribute> getDOList(Integer cate_id, String sel) {
+        PAttributeExample example = new PAttributeExample();
+        example.createCriteria().andCateIdEqualTo(cate_id).andSelEqualTo(sel);
+        List<PAttribute> pAttributes = attributeMapper.selectByExample(example);
+        return pAttributes;
+    }
+
     /**
      * 根据aid与val判断是否重复
      * @param aId
