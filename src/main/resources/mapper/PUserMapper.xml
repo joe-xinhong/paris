@@ -10,6 +10,7 @@
     <result column="p_user_status" jdbcType="INTEGER" property="status" />
     <result column="p_user_created" jdbcType="TIMESTAMP" property="created" />
     <result column="p_user_last_login" jdbcType="TIMESTAMP" property="lastLogin" />
+    <result column="p_user_home_id" jdbcType="VARCHAR" property="homeId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -72,7 +73,7 @@
   <sql id="Base_Column_List">
     p_user.id as p_user_id, p_user.username as p_user_username, p_user.avatar as p_user_avatar, 
     p_user.email as p_user_email, p_user.`password` as `p_user_password`, p_user.`status` as `p_user_status`, 
-    p_user.created as p_user_created, p_user.last_login as p_user_last_login
+    p_user.created as p_user_created, p_user.last_login as p_user_last_login, p_user.home_id as p_user_home_id
   </sql>
   <select id="selectByExample" parameterType="com.commune.paris.entity.PUserExample" resultMap="BaseResultMap">
     select
@@ -107,12 +108,14 @@
   <insert id="insert" parameterType="com.commune.paris.entity.PUser">
     insert into p_user (id, username, avatar, 
       email, `password`, `status`, 
-      created, last_login)
+      created, last_login, home_id
+      )
     values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
       #{email,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
-      #{created,jdbcType=TIMESTAMP}, #{lastLogin,jdbcType=TIMESTAMP})
+      #{created,jdbcType=TIMESTAMP}, #{lastLogin,jdbcType=TIMESTAMP}, #{homeId,jdbcType=VARCHAR}
+      )
   </insert>
-  <insert id="insertSelective" parameterType="com.commune.paris.entity.PUser" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insertSelective" parameterType="com.commune.paris.entity.PUser">
     insert into p_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -139,6 +142,9 @@
       <if test="lastLogin != null">
         last_login,
       </if>
+      <if test="homeId != null">
+        home_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -164,6 +170,9 @@
       </if>
       <if test="lastLogin != null">
         #{lastLogin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="homeId != null">
+        #{homeId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -200,6 +209,9 @@
       <if test="record.lastLogin != null">
         p_user.last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.homeId != null">
+        p_user.home_id = #{record.homeId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -214,7 +226,8 @@
       p_user.`password` = #{record.password,jdbcType=VARCHAR},
       p_user.`status` = #{record.status,jdbcType=INTEGER},
       p_user.created = #{record.created,jdbcType=TIMESTAMP},
-      p_user.last_login = #{record.lastLogin,jdbcType=TIMESTAMP}
+      p_user.last_login = #{record.lastLogin,jdbcType=TIMESTAMP},
+      p_user.home_id = #{record.homeId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -243,6 +256,9 @@
       <if test="lastLogin != null">
         last_login = #{lastLogin,jdbcType=TIMESTAMP},
       </if>
+      <if test="homeId != null">
+        home_id = #{homeId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -254,7 +270,8 @@
       `password` = #{password,jdbcType=VARCHAR},
       `status` = #{status,jdbcType=INTEGER},
       created = #{created,jdbcType=TIMESTAMP},
-      last_login = #{lastLogin,jdbcType=TIMESTAMP}
+      last_login = #{lastLogin,jdbcType=TIMESTAMP},
+      home_id = #{homeId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="countAll" parameterType="map" resultType="int" >

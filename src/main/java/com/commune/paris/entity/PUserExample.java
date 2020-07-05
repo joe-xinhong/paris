@@ -624,6 +624,76 @@ public class PUserExample {
             addCriterion("p_user.last_login not between", value1, value2, "lastLogin");
             return (Criteria) this;
         }
+
+        public Criteria andHomeIdIsNull() {
+            addCriterion("p_user.home_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdIsNotNull() {
+            addCriterion("p_user.home_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdEqualTo(String value) {
+            addCriterion("p_user.home_id =", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdNotEqualTo(String value) {
+            addCriterion("p_user.home_id <>", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdGreaterThan(String value) {
+            addCriterion("p_user.home_id >", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdGreaterThanOrEqualTo(String value) {
+            addCriterion("p_user.home_id >=", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdLessThan(String value) {
+            addCriterion("p_user.home_id <", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdLessThanOrEqualTo(String value) {
+            addCriterion("p_user.home_id <=", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdLike(String value) {
+            addCriterion("p_user.home_id like", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdNotLike(String value) {
+            addCriterion("p_user.home_id not like", value, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdIn(List<String> values) {
+            addCriterion("p_user.home_id in", values, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdNotIn(List<String> values) {
+            addCriterion("p_user.home_id not in", values, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdBetween(String value1, String value2) {
+            addCriterion("p_user.home_id between", value1, value2, "homeId");
+            return (Criteria) this;
+        }
+
+        public Criteria andHomeIdNotBetween(String value1, String value2) {
+            addCriterion("p_user.home_id not between", value1, value2, "homeId");
+            return (Criteria) this;
+        }
     }
 
     /**

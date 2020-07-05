@@ -22,7 +22,7 @@ public interface PUserMapper {
 
     List<PUser> selectByExample(PUserExample example);
 
-    PUser selectByPrimaryKey(@Param("id")Integer id);
+    PUser selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") PUser record, @Param("example") PUserExample example);
 
@@ -35,4 +35,5 @@ public interface PUserMapper {
     Integer countAll(@Param("username")String username);
 
     List<PUser> getUserByPage(@Param("username")String username, @Param("page")PageQuery page);
+
 }

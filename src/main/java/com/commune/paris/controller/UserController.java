@@ -75,4 +75,10 @@ public class UserController {
         return result;
     }
 
+    @RequestMapping(value = "/all",method = RequestMethod.GET,name = "查询全部用户列表接口")
+    public Result getAll(){
+        Result result = userService.getAll();
+        return result;
+    }
+
 }

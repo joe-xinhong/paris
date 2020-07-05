@@ -1,6 +1,7 @@
 package com.commune.paris.service.impl;
 
 import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.commune.paris.entity.PCategory;
 import com.commune.paris.entity.PCategoryExample;
 import com.commune.paris.mapper.PCategoryMapper;
@@ -26,7 +27,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public Result findAllList(Integer type) {
         List<PCategory> categories = getType(type);
         JSONArray array = new JSONArray();
-        TreeUtils.setCategoryTree(0,categories,array);
+        setCategory(0,categories,array);
         return Result.success(array);
     }
 
@@ -132,5 +133,41 @@ public class CategoryServiceImpl implements ICategoryService {
         example.createCriteria().andParentIdEqualTo(id);
         List<PCategory> categories = categoryMapper.selectByExample(example);
         return categories;
+    }
+
+    public boolean getCateBool(Integer pid, List<PCategory> categoryList){
+        if (categoryList.isEmpty()){
+            return false;
+        }
+        List<PCategory> newList = new ArrayList<>();
+        categoryList.forEach(cate ->{
+            if (cate.getParentId().equals(pid)){
+                newList.add(cate);
+            }
+        });
+        if (newList.size()>0){
+            return true;
+        }
+        return false;
+    }
+    /**
+     * 商品分类树
+     * @param parentId
+     * @param categoryList
+     * @param array
+     */
+    public void setCategory(Integer parentId, List<PCategory> categoryList, JSONArray array){
+        for (PCategory cate : categoryList){
+            if (cate.getParentId().equals(parentId)){
+                String string = JSONObject.toJSONString(cate);
+                JSONObject parent = (JSONObject)JSONObject.parse(string);
+                array.add(parent);
+                if (getCateBool(cate.getId(),categoryList)){
+                    JSONArray children = new JSONArray();
+                    parent.put("children",children);
+                    setCategory(cate.getId(),categoryList,children);
+                }
+            }
+        }
     }
 }

@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.commune.paris.mapper.POrderMapper">
+  <resultMap id="BaseResultMap" type="com.commune.paris.entity.POrder">
+    <id column="p_order_id" jdbcType="INTEGER" property="id" />
+    <result column="p_order_order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="p_order_user_id" jdbcType="INTEGER" property="userId" />
+    <result column="p_order_pay_statue" jdbcType="INTEGER" property="payStatue" />
+    <result column="p_order_send_status" jdbcType="INTEGER" property="sendStatus" />
+    <result column="p_order_bill_title" jdbcType="VARCHAR" property="billTitle" />
+    <result column="p_order_bill_company" jdbcType="VARCHAR" property="billCompany" />
+    <result column="p_order_bill_content" jdbcType="VARCHAR" property="billContent" />
+    <result column="p_order_address" jdbcType="VARCHAR" property="address" />
+    <result column="p_order_create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="p_order_update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    p_order.id as p_order_id, p_order.order_id as p_order_order_id, p_order.user_id as p_order_user_id, 
+    p_order.pay_statue as p_order_pay_statue, p_order.send_status as p_order_send_status, 
+    p_order.bill_title as p_order_bill_title, p_order.bill_company as p_order_bill_company, 
+    p_order.bill_content as p_order_bill_content, p_order.address as p_order_address, 
+    p_order.create_time as p_order_create_time, p_order.update_time as p_order_update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.commune.paris.entity.POrderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from p_order p_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from p_order p_order
+    where p_order.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from p_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.commune.paris.entity.POrderExample">
+    delete from p_order p_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.commune.paris.entity.POrder" useGeneratedKeys="true" keyProperty="id">
+    insert into p_order (id, order_id, user_id, 
+      pay_statue, send_status, bill_title, 
+      bill_company, bill_content, address, 
+      create_time, update_time)
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
+      #{payStatue,jdbcType=INTEGER}, #{sendStatus,jdbcType=INTEGER}, #{billTitle,jdbcType=VARCHAR}, 
+      #{billCompany,jdbcType=VARCHAR}, #{billContent,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.commune.paris.entity.POrder" useGeneratedKeys="true" keyProperty="id">
+    insert into p_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="payStatue != null">
+        pay_statue,
+      </if>
+      <if test="sendStatus != null">
+        send_status,
+      </if>
+      <if test="billTitle != null">
+        bill_title,
+      </if>
+      <if test="billCompany != null">
+        bill_company,
+      </if>
+      <if test="billContent != null">
+        bill_content,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="payStatue != null">
+        #{payStatue,jdbcType=INTEGER},
+      </if>
+      <if test="sendStatus != null">
+        #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="billTitle != null">
+        #{billTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="billCompany != null">
+        #{billCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="billContent != null">
+        #{billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.commune.paris.entity.POrderExample" resultType="java.lang.Long">
+    select count(*) from p_order p_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update p_order p_order
+    <set>
+      <if test="record.id != null">
+        p_order.id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null">
+        p_order.order_id = #{record.orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        p_order.user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payStatue != null">
+        p_order.pay_statue = #{record.payStatue,jdbcType=INTEGER},
+      </if>
+      <if test="record.sendStatus != null">
+        p_order.send_status = #{record.sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="record.billTitle != null">
+        p_order.bill_title = #{record.billTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billCompany != null">
+        p_order.bill_company = #{record.billCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="record.billContent != null">
+        p_order.bill_content = #{record.billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        p_order.address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        p_order.create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        p_order.update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update p_order p_order
+    set p_order.id = #{record.id,jdbcType=INTEGER},
+      p_order.order_id = #{record.orderId,jdbcType=VARCHAR},
+      p_order.user_id = #{record.userId,jdbcType=INTEGER},
+      p_order.pay_statue = #{record.payStatue,jdbcType=INTEGER},
+      p_order.send_status = #{record.sendStatus,jdbcType=INTEGER},
+      p_order.bill_title = #{record.billTitle,jdbcType=VARCHAR},
+      p_order.bill_company = #{record.billCompany,jdbcType=VARCHAR},
+      p_order.bill_content = #{record.billContent,jdbcType=VARCHAR},
+      p_order.address = #{record.address,jdbcType=VARCHAR},
+      p_order.create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      p_order.update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.commune.paris.entity.POrder">
+    update p_order
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="payStatue != null">
+        pay_statue = #{payStatue,jdbcType=INTEGER},
+      </if>
+      <if test="sendStatus != null">
+        send_status = #{sendStatus,jdbcType=INTEGER},
+      </if>
+      <if test="billTitle != null">
+        bill_title = #{billTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="billCompany != null">
+        bill_company = #{billCompany,jdbcType=VARCHAR},
+      </if>
+      <if test="billContent != null">
+        bill_content = #{billContent,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.commune.paris.entity.POrder">
+    update p_order
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      pay_statue = #{payStatue,jdbcType=INTEGER},
+      send_status = #{sendStatus,jdbcType=INTEGER},
+      bill_title = #{billTitle,jdbcType=VARCHAR},
+      bill_company = #{billCompany,jdbcType=VARCHAR},
+      bill_content = #{billContent,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="countOrderAll" parameterType="map" resultType="int" >
+    select count(1)
+    from p_order
+    <if test="userId != null">
+      where user_id =#{userId}
+    </if>
+  </select>
+  <select id="getOrderByPage" parameterType="map" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p_order
+    <if test="userId != null">
+      where user_id = #{userId}
+    </if>
+    order by
+    create_time desc
+    limit #{page.offset},#{page.pageSize}
+  </select>
+  <delete id="deleteByOrderId" parameterType="java.lang.String">
+        delete from p_order
+        where order_id = #{orderId,jdbcType=VARCHAR}
+</delete>
+  <select id="getToday" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p_order
+    where
+    date(create_time) = CURDATE()
+  </select>
+  <select id="getMonth" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from p_order
+    where
+    DATE_FORMAT(create_time,'%Y%m')=DATE_FORMAT(CURDATE( ),'%Y%m')
+  </select>
+</mapper>

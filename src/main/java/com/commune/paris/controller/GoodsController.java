@@ -57,5 +57,17 @@ public class GoodsController {
         Result result = goodsService.getOneById(id);
         return Result.success(result);
     }
+
+    @RequestMapping(value = "/getListByCateId/{cateId}",method = RequestMethod.GET,name = "根据分类id查询所有商品接口")
+    public Result getListByCateId(@PathVariable("cateId") Integer cateId){
+        Result result = goodsService.getListByCateId(cateId);
+        return Result.success(result);
+    }
+
+    @RequestMapping(value = "/getEasyGoodsById/{id}",method = RequestMethod.GET,name = "根据id商品简单信息接口")
+    public Result getEasyGoodsById(@PathVariable("id") Integer id){
+        Result result = goodsService.getEasyGoodsById(id);
+        return Result.success(result);
+    }
 }
 

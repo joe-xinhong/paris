@@ -1,11 +1,5 @@
 package com.commune.paris.entity;
 
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.Data;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -13,7 +7,6 @@ import java.util.Date;
  * p_user
  * @author 
  */
-@Data
 public class PUser implements Serializable {
     /**
      * 用户id
@@ -23,7 +16,6 @@ public class PUser implements Serializable {
     /**
      * 用户名
      */
-    @NotBlank(message = "昵称不能为空")
     private String username;
 
     /**
@@ -34,8 +26,6 @@ public class PUser implements Serializable {
     /**
      * 邮箱
      */
-    @NotBlank(message = "邮箱不能为空")
-    @Email(message = "邮箱格式不正确")
     private String email;
 
     /**
@@ -51,14 +41,17 @@ public class PUser implements Serializable {
     /**
      * 注册时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date created;
 
     /**
      * 上次登录时间
      */
-    @JsonFormat(pattern = "yyyy-MM-dd HH-mm-ss")
     private Date lastLogin;
+
+    /**
+     * homeId
+     */
+    private String homeId;
 
     private static final long serialVersionUID = 1L;
 
@@ -126,6 +119,14 @@ public class PUser implements Serializable {
         this.lastLogin = lastLogin;
     }
 
+    public String getHomeId() {
+        return homeId;
+    }
+
+    public void setHomeId(String homeId) {
+        this.homeId = homeId;
+    }
+
     @Override
     public boolean equals(Object that) {
         if (this == that) {
@@ -145,7 +146,8 @@ public class PUser implements Serializable {
             && (this.getPassword() == null ? other.getPassword() == null : this.getPassword().equals(other.getPassword()))
             && (this.getStatus() == null ? other.getStatus() == null : this.getStatus().equals(other.getStatus()))
             && (this.getCreated() == null ? other.getCreated() == null : this.getCreated().equals(other.getCreated()))
-            && (this.getLastLogin() == null ? other.getLastLogin() == null : this.getLastLogin().equals(other.getLastLogin()));
+            && (this.getLastLogin() == null ? other.getLastLogin() == null : this.getLastLogin().equals(other.getLastLogin()))
+            && (this.getHomeId() == null ? other.getHomeId() == null : this.getHomeId().equals(other.getHomeId()));
     }
 
     @Override
@@ -160,6 +162,7 @@ public class PUser implements Serializable {
         result = prime * result + ((getStatus() == null) ? 0 : getStatus().hashCode());
         result = prime * result + ((getCreated() == null) ? 0 : getCreated().hashCode());
         result = prime * result + ((getLastLogin() == null) ? 0 : getLastLogin().hashCode());
+        result = prime * result + ((getHomeId() == null) ? 0 : getHomeId().hashCode());
         return result;
     }
 
@@ -177,6 +180,7 @@ public class PUser implements Serializable {
         sb.append(", status=").append(status);
         sb.append(", created=").append(created);
         sb.append(", lastLogin=").append(lastLogin);
+        sb.append(", homeId=").append(homeId);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

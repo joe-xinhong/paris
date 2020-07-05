@@ -25,4 +25,6 @@ public interface IUserService {
     Result deleteById(Integer id);
 
     Result updateRole(Integer id, Integer rId);
+
+    Result getAll();
 }

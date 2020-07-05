@@ -18,4 +18,8 @@ public interface IGoodsService {
     Result deleteBy(Integer id);
 
     Result getOneById(Integer id);
+
+    Result getListByCateId(Integer cateId);
+
+    Result getEasyGoodsById(Integer id);
 }

@@ -156,6 +156,24 @@ public class GoodsServiceImpl implements IGoodsService {
         return Result.success(goodsModel);
     }
 
+    @Override
+    public Result getListByCateId(Integer cateId) {
+        PGoodsExample example = new PGoodsExample();
+        example.createCriteria().andCateIdEqualTo(cateId);
+        List<PGoods> goodsList = goodsMapper.selectByExample(example);
+        return Result.success(goodsList);
+    }
+
+    @Override
+    public Result getEasyGoodsById(Integer id) {
+        PGoods pGoods = goodsMapper.selectByPrimaryKey(id);
+        if (pGoods==null){
+            return Result.fail("信息有误");
+        }
+        GoodsDTO goodsDTO = getByGoodsDO(pGoods);
+        return Result.success(goodsDTO);
+    }
+
     /**
      * 获取确定商品的静态/动态数据
      * @param pGoods

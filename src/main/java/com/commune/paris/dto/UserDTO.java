@@ -52,4 +52,6 @@ public class UserDTO {
      * 用户角色集合
      */
     private List<PRole> roles = new ArrayList<>();
+
+    private String homeId;
 }

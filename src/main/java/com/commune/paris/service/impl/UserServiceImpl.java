@@ -155,6 +155,12 @@ public class UserServiceImpl implements IUserService {
         return Result.success(i);
     }
 
+    @Override
+    public Result getAll() {
+        List<PUser> users = userMapper.selectByExample(new PUserExample());
+        return Result.success(users);
+    }
+
     private UserDTO getUserDO(PUser user){
         if (user==null){
             return null;
